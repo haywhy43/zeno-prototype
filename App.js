@@ -52,7 +52,7 @@ const App = () => {
             <Route path="/booking" component={Booking} />
             <Route path="/select-booking/:from/:to" component={SelectBooking} />
             <Route path="/trip-details/:index" component={TripDetails} />
-            <Route path="/confirm" component={Confirm} />
+            <Route path="/confirm/:amount" component={Confirm} />
             <Route path="/complete" component={Complete} />
           </ScrollView>
         </SafeAreaView>

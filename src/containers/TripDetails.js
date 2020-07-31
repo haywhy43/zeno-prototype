@@ -14,123 +14,60 @@ import provider from '../utils/provider';
 
 const TripDetails = (props) => {
   const [prov, setProvider] = useState(provider[props.match.params.index]);
+  const date = new Date()
   return (
     <Layout title="Trip Details">
       <View>
         <Image source={require('../assets/img/map-details.png')} />
         <View style={styles.top}>
-          <Text style={styles.text}>14/08/19, 9:00AM</Text>
-          <Text style={styles.text}>N2,850</Text>
+          <Text style={styles.text}>{date.getDate()}/{date.getMonth() +1}/{date.getFullYear()}, {date.getHours()}:{date.getMinutes()}</Text>
+          <Text style={styles.text}>N{prov.total}</Text>
         </View>
-        <View style={styles.detail}>
-          <View style={styles.detail_inner}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/img/bicycle.png')}
-                style={{marginRight: 10}}
-              />
-              <Text style={styles.text}>Max</Text>
-            </View>
-            <Text style={styles.text}>10km</Text>
-            <Text style={styles.text}>N500</Text>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-            }}>
-            <View style={styles.indicator}>
-              <View style={styles.green}></View>
-              <View style={styles.line}></View>
-              <View style={styles.red}></View>
-            </View>
-            <View style={{marginLeft: 15}}>
-              <View style={styles.text_container}>
-                <Text style={styles.text_sm}>10 John Street, Ikorodu</Text>
+        {prov.transport.map((trans) => (
+          <View style={styles.detail} key={trans.slug}>
+            <View style={styles.detail_inner}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Image
+                  source={require('../assets/img/bicycle.png')}
+                  style={{marginRight: 10}}
+                />
+                <Text style={styles.text}>{trans.name}</Text>
               </View>
-              <View style={styles.text_container}>
-                <Text style={styles.text_sm}>Ikorodu Garage Bus Stop</Text>
+              <Text style={styles.text}>{trans.distance}km</Text>
+              <Text style={styles.text}>N{trans.amount || ' / A'}</Text>
+            </View>
+            <View
+              style={{
+                marginTop: 20,
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+              }}>
+              <View style={styles.indicator}>
+                <View style={styles.green}></View>
+                <View style={styles.line}></View>
+                <View style={styles.red}></View>
               </View>
-            </View>
-          </View>
-        </View>
-        <View style={styles.detail}>
-          <View style={styles.detail_inner}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/img/bus-new.png')}
-                style={{marginRight: 10, marginLeft: 5}}
-              />
-              <Text style={styles.text}>BRT</Text>
-            </View>
-            <Text style={styles.text}>45km</Text>
-            <Text style={styles.text}>N/A</Text>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-            }}>
-            <View style={styles.indicator}>
-              <View style={styles.green}></View>
-              <View style={styles.line}></View>
-              <View style={styles.red}></View>
-            </View>
-            <View style={{marginLeft: 15}}>
-              <View style={styles.text_container}>
-                <Text style={styles.text_sm}>Ikorodu Garage Bus Stop</Text>
-              </View>
-              <View style={styles.text_container}>
-                <Text style={styles.text_sm}>TBS BRT Bus Stop</Text>
+              <View style={{marginLeft: 15}}>
+                <View style={styles.text_container}>
+                  <Text style={styles.text_sm}>{trans.start}</Text>
+                </View>
+                <View style={styles.text_container}>
+                  <Text style={styles.text_sm}>{trans.stop}</Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View style={styles.detail}>
-          <View style={styles.detail_inner}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/img/bicycle.png')}
-                style={{marginRight: 10}}
-              />
-              <Text style={styles.text}>Max</Text>
-            </View>
-            <Text style={styles.text}>15km</Text>
-            <Text style={styles.text}>N500</Text>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-            }}>
-            <View style={styles.indicator}>
-              <View style={styles.green}></View>
-              <View style={styles.line}></View>
-              <View style={styles.red}></View>
-            </View>
-            <View style={{marginLeft: 15}}>
-              <View style={styles.text_container}>
-                <Text style={styles.text_sm}>TBS BRT Bus Stop</Text>
-              </View>
-              <View style={styles.text_container}>
-                <Text style={styles.text_sm}>20 Fola Osibo St. Lekki</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        ))}
         <View style={styles.buttons}>
           <TouchableHighlight
             style={styles.btn_blue}
             underlayColor=""
             onPress={() => {
-              props.history.goBack()
+              props.history.goBack();
             }}>
             <Text style={styles.btn_text}>BACK</Text>
           </TouchableHighlight>
-          <Link to="/confirm" style={{...styles.btn_blue, marginLeft: 20}}>
+          <Link to={`/confirm/${prov.total}`} style={{...styles.btn_blue, marginLeft: 20}}>
             <Text style={styles.btn_text}>CONFIRM</Text>
           </Link>
         </View>

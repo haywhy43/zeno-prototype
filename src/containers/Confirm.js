@@ -13,7 +13,7 @@ import {Link} from 'react-router-native';
 
 const methods = ['Debit Card', 'Voucher PIN', 'Other'];
 
-const Confirm = () => {
+const Confirm = (props) => {
   const [selected, setSelected] = useState('Debit Card');
   const [value, setValue] = useState('');
   return (
@@ -22,7 +22,7 @@ const Confirm = () => {
         <View style={styles.header}>
           <Text style={{fontSize: 16, color: '#FFFFFF'}}>TRIP FARE</Text>
           <Text style={{fontSize: 32, color: '#FFFFFF', fontWeight: '700'}}>
-            N1,000
+            N{props.match.params.amount}
           </Text>
         </View>
         <Text
