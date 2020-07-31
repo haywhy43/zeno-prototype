@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Layout from '../layout/Default';
 import BottomNav from '../components/BottomNav';
-import {View, Image, Dimensions, StyleSheet, Text} from 'react-native';
+import {
+  View,
+  Image,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+} from 'react-native';
 import {Link} from 'react-router-native';
+import provider from '../utils/provider';
 
-const TripDetails = () => {
+const TripDetails = (props) => {
+  const [prov, setProvider] = useState(provider[props.match.params.index]);
   return (
     <Layout title="Trip Details">
       <View>
@@ -113,12 +122,15 @@ const TripDetails = () => {
           </View>
         </View>
         <View style={styles.buttons}>
-          <Link to="/select-booking" style={styles.btn_blue}>
+          <TouchableHighlight
+            style={styles.btn_blue}
+            underlayColor=""
+            onPress={() => {
+              props.history.goBack()
+            }}>
             <Text style={styles.btn_text}>BACK</Text>
-          </Link>
-          <Link
-            to="/confirm"
-            style={{...styles.btn_blue, marginLeft: 20}}>
+          </TouchableHighlight>
+          <Link to="/confirm" style={{...styles.btn_blue, marginLeft: 20}}>
             <Text style={styles.btn_text}>CONFIRM</Text>
           </Link>
         </View>

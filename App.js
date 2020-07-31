@@ -50,8 +50,8 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <Route path="/services" component={Services} />
             <Route path="/booking" component={Booking} />
-            <Route path="/select-booking" component={SelectBooking} />
-            <Route path="/trip-details" component={TripDetails} />
+            <Route path="/select-booking/:from/:to" component={SelectBooking} />
+            <Route path="/trip-details/:index" component={TripDetails} />
             <Route path="/confirm" component={Confirm} />
             <Route path="/complete" component={Complete} />
           </ScrollView>

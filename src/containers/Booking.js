@@ -7,14 +7,23 @@ import {
   Dimensions,
   Image,
   TextInput,
+  TouchableHighlight,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import BottomNav from '../components/BottomNav';
 import {Link} from 'react-router-native';
 
-const Booking = () => {
-  const [from, setFrom] = useState('Select From');
-  const [to, setTo] = useState('Select to');
+const Booking = (props) => {
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [activeInput, setActiveInput] = useState('');
+
+  const proceed = () => {
+    if (from && to) {
+      props.history.push(`/select-booking/${from}/${to}`);
+    }
+  };
+
   return (
     <Layout title="Booking">
       <View style={styles.container}>
@@ -35,6 +44,8 @@ const Booking = () => {
                 fontSize: 15,
                 paddingLeft: 15,
               }}
+              placeholder="Select From"
+              onFocus={() => setActiveInput('from')}
               value={from}
               onChangeText={(text) => setFrom(text)}
               clearTextOnFocus
@@ -50,16 +61,20 @@ const Booking = () => {
                 fontSize: 15,
                 paddingLeft: 15,
               }}
+              placeholder="Select To"
               value={to}
               onChangeText={(text) => setTo(text)}
               clearTextOnFocus
             />
             <View style={styles.buttons}>
-              <Link to="/select-booking" style={styles.btn_blue}>
+              <TouchableHighlight
+                onPress={proceed}
+                underlayColor=""
+                style={styles.btn_blue}>
                 <Text style={styles.btn_text}>LEAVE NOW</Text>
-              </Link>
+              </TouchableHighlight>
 
-              <Link to="/leave" style={styles.btn_red}>
+              <Link to="/" style={styles.btn_red}>
                 <Text style={styles.btn_text}>SCHEDULE</Text>
               </Link>
             </View>
@@ -96,6 +111,13 @@ const Booking = () => {
               </Text>
             </View>
           </View>
+        </View>
+        <View>
+          <Text style={{textAlign: 'center', marginTop: 30}}>
+            {props.location.search
+              ? decodeURI(props.location.search.split('=')[1])
+              : ''}
+          </Text>
         </View>
       </View>
       <BottomNav />
@@ -196,7 +218,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginLeft: 10,
     color: '#676867',
-    width: '85%'
+    width: '85%',
   },
 });
 
