@@ -43,6 +43,7 @@ const App = () => {
       <NativeRouter>
         <SafeAreaView>
           <ScrollView
+            keyboardShouldPersistTaps="handled"
             alwaysBounceVertical
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>

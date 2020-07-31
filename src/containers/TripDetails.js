@@ -8,19 +8,23 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 import {Link} from 'react-router-native';
 import provider from '../utils/provider';
 
 const TripDetails = (props) => {
   const [prov, setProvider] = useState(provider[props.match.params.index]);
-  const date = new Date()
+  const date = new Date();
   return (
     <Layout title="Trip Details">
-      <View>
+      <ScrollView>
         <Image source={require('../assets/img/map-details.png')} />
         <View style={styles.top}>
-          <Text style={styles.text}>{date.getDate()}/{date.getMonth() +1}/{date.getFullYear()}, {date.getHours()}:{date.getMinutes()}</Text>
+          <Text style={styles.text}>
+            {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()},{' '}
+            {date.getHours()}:{date.getMinutes()}
+          </Text>
           <Text style={styles.text}>N{prov.total}</Text>
         </View>
         {prov.transport.map((trans) => (
@@ -67,11 +71,13 @@ const TripDetails = (props) => {
             }}>
             <Text style={styles.btn_text}>BACK</Text>
           </TouchableHighlight>
-          <Link to={`/confirm/${prov.total}`} style={{...styles.btn_blue, marginLeft: 20}}>
+          <Link
+            to={`/confirm/${prov.total}`}
+            style={{...styles.btn_blue, marginLeft: 20}}>
             <Text style={styles.btn_text}>CONFIRM</Text>
           </Link>
         </View>
-      </View>
+      </ScrollView>
       <BottomNav />
     </Layout>
   );
@@ -146,6 +152,8 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: 'row',
     justifyContent: 'center',
+    // height: 50,
+    marginBottom: 200,
   },
 
   btn_blue: {
